@@ -3,7 +3,10 @@ def current_user
 end
 
 
+# def authorized_user?
+#   @entry.user == current_user
+# end
+
 def logged_in?
   session[:user_id] != nil
 end
-

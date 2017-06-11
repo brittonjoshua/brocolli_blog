@@ -16,11 +16,11 @@ post '/users' do
 end
 
 
-get '/login' do
+get '/users/login' do
   erb :'users/login'
 end
 
-post '/login' do
+post '/users/login' do
   username_attempt = params[:username]
   password_attempt = params[:password]
   @user = User.authenticate(username_attempt, password_attempt)

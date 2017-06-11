@@ -5,14 +5,20 @@ get '/entries' do
 end
 
 post '/entries' do
-  @entry = Entry.new(params[:entry])
-  # @user = @entry.user
-  if @entry.save
-    redirect "/entries/#{@entry.id}"
+  if logged_in? && current_user
+      @entry = current_user.entries.new(params[:entry])
+
+      if @entry.save
+        redirect "/entries/#{@entry.id}"
+      else
+        @errors = @entry.errors.full_messages
+        erb :'entries/new'
+      end
   else
-    @errors = @entry.errors.full_messages
-    erb :'entries/new'
+    status 403
+    erb :"403"
   end
+
 end
 
 get '/entries/new' do
@@ -20,35 +26,52 @@ get '/entries/new' do
     erb :'entries/new'
   else
     status 403
-
-     erb :"403"
+    erb :"403"
   end
 end
 
 get '/entries/:id' do
-  @entry = find_and_ensure_entry(params[:id])
-  erb :'entries/show'
+    @entry = find_and_ensure_entry(params[:id])
+    erb :'entries/show'
 end
 
 put '/entries/:id' do
-  @entry = find_and_ensure_entry(params[:id])
-  @entry.assign_attributes(params[:entry])
+  if logged_in? && current_user
+      # if authorized_user?
+      @entry = find_and_ensure_entry(params[:id])
+      @entry.assign_attributes(params[:entry])
 
-  if @entry.save
-    redirect "entries/#{@entry.id}"
+      if @entry.save
+        redirect "entries/#{@entry.id}"
+      else
+        @errors = @entry.errors.full_messages
+        erb :'entries/edit'
+      end
   else
-    @errors = @entry.errors.full_messages
-    erb :'entries/edit'
+     status 403
+     erb :"403"
   end
 end
 
 delete '/entries/:id' do
-  @entry = find_and_ensure_entry(params[:id])
-  @entry.destroy
-  redirect '/entries'
+  if logged_in? && current_user
+  # if authorized_user?
+    @entry = find_and_ensure_entry(params[:id])
+    @entry.destroy
+    redirect '/entries'
+  else
+     status 403
+     erb :"403"
+  end
 end
 
 get '/entries/:id/edit' do
-  @entry = find_and_ensure_entry(params[:id])
-  erb :'entries/edit'
+  if logged_in? && current_user
+    # if authorized_user?
+    @entry = find_and_ensure_entry(params[:id])
+    erb :'entries/edit'
+  else
+       status 403
+       erb :"403"
+  end
 end
