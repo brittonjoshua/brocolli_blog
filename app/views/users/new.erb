@@ -1,8 +1,8 @@
 <h2>Register as a new user</h2>
  <% if @errors %>
  <% @errors.each do |error| %>
- <%= error %>
- <% end %>
+    <%= error %>
+  <% end %>
  <% end %>
 <form action="/users" method="post">
   <input type="text" name="username" placeholder="Username">

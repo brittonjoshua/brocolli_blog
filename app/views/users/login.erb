@@ -1,1 +1,14 @@
-this is where you login.
+<h2>Login to start bloggin...</h2>
+<% if @errors %>
+<ul><% @errors.each do |error| %>
+    <li><%= error %></li>
+   <% end %>
+  <% end %>
+</ul>
+
+<form action="/login" method="post">
+  <input type="text" name="username" placeholder="Username">
+  <input type="password" name="password" placeholder="Password">
+  <input type="submit" value="submit">
+
+</form>
