@@ -30,7 +30,7 @@ post '/login' do
     redirect "/"
   else
     @errors = ["Sad broccoli, invalid credentials"]
-    erb :"/login"
+    erb :"/users/login"
   end
 end
 

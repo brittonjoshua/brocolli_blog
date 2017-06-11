@@ -6,7 +6,7 @@ end
 
 post '/entries' do
   @entry = Entry.new(params[:entry])
-
+  # @user = @entry.user
   if @entry.save
     redirect "/entries/#{@entry.id}"
   else
@@ -16,7 +16,13 @@ post '/entries' do
 end
 
 get '/entries/new' do
-  erb :'entries/new'
+  if logged_in? && current_user
+    erb :'entries/new'
+  else
+    status 403
+
+     erb :"403"
+  end
 end
 
 get '/entries/:id' do
