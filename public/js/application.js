@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    $(".navbar").on("click", "#register-link", function(event) {
+    $("#register-link").on("click", function(event) {
     event.preventDefault();
     var $link = $(this).attr('href');
-    var $this =$(this);
 
     var request = $.ajax({
       method: "GET",
@@ -10,10 +9,25 @@ $(document).ready(function() {
     });
     request.done(function(response){
       console.log(response);
-      $('form').remove;
+      $('form').hide();
       $('body').prepend(response);
-
     })
+  })
+
+    $("#login-link").on("click", function(event) {
+    event.preventDefault();
+    var $link = $(this).attr('href');
+
+    var request = $.ajax({
+      method: "GET",
+      url: $link
+    });
+    request.done(function(response){
+      console.log(response);
+      $('form').hide();
+      $('body').prepend(response);
+    })
+
 
     })
   $('#click-form').on('click', function(event){
@@ -25,6 +39,7 @@ $(document).ready(function() {
       method: "GET",
       url: $link
     });
+
     request.done(function(response){
       console.log(response);
       $('#click-form').closest('div').prepend(response);
