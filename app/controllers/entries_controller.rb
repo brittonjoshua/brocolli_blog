@@ -23,7 +23,12 @@ end
 
 get '/entries/new' do
   if logged_in? && current_user
-    erb :'entries/new'
+    if request.xhr?
+      p binding
+      erb :'entries/_new_form', layout: false
+    else
+      erb :'entries/new'
+    end
   else
     status 403
     erb :"403"
