@@ -12,25 +12,21 @@
 <body>
   <header role="banner" class="mar-t-5 pad-t-2 pad-b-4 pad-s-1 wrap-float bg-white">
     <div class="max-w-700 center wrap-float">
-      <nav class="clearfix mar-b-1">
-        <ul class="no-bullets no-margin no-padding right">
-          <% if logged_in? %>
-          <li class="pipe-separate t-light-green left"><a href="/"><%= current_user.username %></a></li>
-           <li class="pipe-separate t-light-green left">
-            <form action='/logout' method='POST'>
-              <input type='hidden' name='_method' value='delete'>
-              <input type="submit" value="logout">
-          </form>
-           </li>
-             <li class="pipe-separate t-light-green left"><a href="/">home</a></li>
-          <% else %>
-          <li class="pipe-separate t-light-green left"><a href="/">home</a></li>
-          <li class="pipe-separate t-light-green left"><a href="/users/login">login</a></li>
-          <li class="pipe-separate t-light-green left"><a href="/users/new">register</a></li>
-          <% end %>
-        </ul>
-      </nav>
-
+        <nav class="navbar clearfix mar-b-1">
+    <ul class="no-bullets no-margin no-padding right">
+      <li class="pipe-separate t-light-green left"><a href="/">home</a></li>
+      <% if logged_in? %>
+        <li class="pipe-separate t-light-green left"><%= "#{current_user.username}"%></li>
+        <form method="post" action="/users/logout">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="Logout">
+        </form>
+      <% else %>
+       <li class="pipe-separate t-light-green left"><a class="nav-link" id="register-link" href="/users/new">Register</a></li>
+       <li class="pipe-separate t-light-green left"><a class="nav-link" id="login-link" href="/users/login">Login</a></li>
+    <% end %>
+  </ul>
+</nav>
       <div class="logo-container">
         <img class="logo" src="/images/logo.png" class="center block">
         <h1>Broccoli Blog</h1>

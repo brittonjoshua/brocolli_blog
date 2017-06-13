@@ -1,5 +1,9 @@
 get '/users/new' do
-  erb :'users/new'
+  if request.xhr?
+    erb :"/users/_register_form", layout: false
+  else
+    erb :'users/new'
+  end
 end
 
 post '/users' do
@@ -34,7 +38,7 @@ post '/users/login' do
   end
 end
 
-delete '/logout' do
+delete '/users/logout' do
   session[:user_id] = nil
   redirect '/'
 end
