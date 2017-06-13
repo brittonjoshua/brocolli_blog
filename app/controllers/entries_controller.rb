@@ -7,13 +7,17 @@ end
 post '/entries' do
   if logged_in? && current_user
       @entry = current_user.entries.new(params[:entry])
-
-      if @entry.save
-        redirect "/entries/#{@entry.id}"
+    if @entry.save
+      if request.xhr?
+         erb :'/entries/_new_entry', locals: {entry: @entry}, layout: false
       else
-        @errors = @entry.errors.full_messages
-        erb :'entries/new'
+          redirect "/entries/#{@entry.id}"
       end
+
+    else
+      @errors = @entry.errors.full_messages
+      erb :'entries/new'
+    end
   else
     status 403
     erb :"403"
